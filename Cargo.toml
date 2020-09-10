@@ -1,0 +1,18 @@
+[package]
+name = "jwt"
+version = "0.3.0"
+authors = ["Christoph Parnitzke <christoph.parnitzke@tutamail.com>"]
+edition = "2018"
+description = "A JSON Web Token Decoder in Rust"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base64 = "0.12.3"
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 3

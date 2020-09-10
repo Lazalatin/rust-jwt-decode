@@ -37,5 +37,9 @@ Options:
 	--help,  -h	 View this help message
 ```
 
+### Recommendation
+If you happen to like pretty-printed JSON, I suggest piping the output of `jwt` through a filter like `jq`, like this:
+```jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c | jq```   
+
 ## License
 This project is licensed under MIT.

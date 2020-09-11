@@ -1,6 +1,7 @@
 //! # JWT Decoder
 //!
 //! `jwt` is a JSON Web Token decoder, which makes debugging with JWTs more convenient.
+#![forbid(unsafe_code)]
 
 use base64;
 use std;

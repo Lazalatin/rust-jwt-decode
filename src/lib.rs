@@ -25,7 +25,7 @@ pub fn run(args: &Vec<String>) -> Result<(), Box<dyn std::error::Error>> {
 /// ```
 /// let args: &Vec<String> = &vec!("/bin/jwt".to_string(), "--help".to_string());
 ///
-/// assert_eq!(Ok("--help"), jwt::parse_arguments(&args))
+/// assert_eq!(Ok("--help"), jwt_decode::parse_arguments(&args))
 /// ```
 pub fn parse_arguments(args: &Vec<String>) -> Result<&str, &'static str> {
     if args.len() == 0 {
@@ -45,7 +45,7 @@ pub fn parse_arguments(args: &Vec<String>) -> Result<&str, &'static str> {
 /// ```
 /// let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 ///
-/// assert_eq!(vec!["{\"alg\":\"HS256\",\"typ\":\"JWT\"}", "{\"sub\":\"1234567890\",\"name\":\"John Doe\",\"iat\":1516239022}"], jwt::process_jwt(&jwt.to_string()).unwrap());
+/// assert_eq!(vec!["{\"alg\":\"HS256\",\"typ\":\"JWT\"}", "{\"sub\":\"1234567890\",\"name\":\"John Doe\",\"iat\":1516239022}"], jwt_decode::process_jwt(&jwt.to_string()).unwrap());
 /// ```
 ///
 /// # Panic

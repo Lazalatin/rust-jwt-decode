@@ -2,7 +2,7 @@
 
 [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 
-[![Build Status](https://github.com/Lazalatin/rust-jwt-decode/workflows/CI/badge.svg)](https://github.com/Lazalatin/rust-jwt-decode/actions)
+[![Build Status](https://github.com/Lazalatin/rust-jwt-decode/workflows/Rust%20Example/badge.svg)](https://github.com/Lazalatin/rust-jwt-decode/actions)
 
 ## Motivation
 

@@ -44,7 +44,7 @@ pub fn parse_arguments(args: &[String]) -> Result<Option<&str>, &'static str> {
 ///     jwt_decode::process_jwt(&jwt.to_string()).unwrap()
 /// );
 /// ```
-pub fn process_jwt(jwt: &str) -> Result<[String; 2], Box<dyn Error>> {
+pub fn process_jwt(jwt: &str) -> Result<[serde_json::Value; 2], Box<dyn Error>> {
     let splitted_jwt_strings: Vec<_> = jwt.split('.').collect();
 
     let jwt_header = splitted_jwt_strings.get(0).expect("split always returns at least one element");
@@ -56,12 +56,15 @@ pub fn process_jwt(jwt: &str) -> Result<[String; 2], Box<dyn Error>> {
     let converted_jwt_header = String::from_utf8(decoded_jwt_header)?;
     let converted_jwt_body = String::from_utf8(decoded_jwt_body)?;
 
-    Ok([converted_jwt_header, converted_jwt_body])
+    let parsed_jwt_header = serde_json::from_str::<serde_json::Value>(&converted_jwt_header)?;
+    let parsed_jwt_body = serde_json::from_str::<serde_json::Value>(&converted_jwt_body)?;
+
+    Ok([parsed_jwt_header, parsed_jwt_body])
 }
 
-fn printout_decoded_jwt(jwt: &[String]) {
-    println!("{}", jwt[0]);
-    println!("{}", jwt[1]);
+fn printout_decoded_jwt(jwt: &[serde_json::Value; 2]) {
+    println!("{}", serde_json::to_string_pretty(&jwt[0]).expect("to_string_pretty always works on serde_json::Value"));
+    println!("{}", serde_json::to_string_pretty(&jwt[1]).expect("to_string_pretty always works on serde_json::Value"));
 }
 
 fn printout_help() {

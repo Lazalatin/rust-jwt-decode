@@ -37,18 +37,23 @@ pub fn parse_arguments(args: &[String]) -> Result<Option<&str>, &'static str> {
 /// # Examples
 ///
 /// ```
+/// # use serde_json::json;
 /// let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 ///
 /// assert_eq!(
-///     vec![r#"{"alg":"HS256","typ":"JWT"}"#, r#"{"sub":"1234567890","name":"John Doe","iat":1516239022}"#],
+///     [json!({"alg":"HS256","typ":"JWT"}), json!({"sub":"1234567890","name":"John Doe","iat":1516239022})],
 ///     jwt_decode::process_jwt(&jwt.to_string()).unwrap()
 /// );
 /// ```
 pub fn process_jwt(jwt: &str) -> Result<[serde_json::Value; 2], Box<dyn Error>> {
     let splitted_jwt_strings: Vec<_> = jwt.split('.').collect();
 
-    let jwt_header = splitted_jwt_strings.get(0).expect("split always returns at least one element");
-    let jwt_body = splitted_jwt_strings.get(1).ok_or(Box::<dyn Error>::from("Could not find separator in jwt string."))?;
+    let jwt_header = splitted_jwt_strings
+        .get(0)
+        .expect("split always returns at least one element");
+    let jwt_body = splitted_jwt_strings.get(1).ok_or(Box::<dyn Error>::from(
+        "Could not find separator in jwt string.",
+    ))?;
 
     let decoded_jwt_header = base64::decode(jwt_header)?;
     let decoded_jwt_body = base64::decode(jwt_body)?;
@@ -63,14 +68,27 @@ pub fn process_jwt(jwt: &str) -> Result<[serde_json::Value; 2], Box<dyn Error>> 
 }
 
 fn printout_decoded_jwt(jwt: &[serde_json::Value; 2]) {
-    println!("{}", serde_json::to_string_pretty(&jwt[0]).expect("to_string_pretty always works on serde_json::Value"));
-    println!("{}", serde_json::to_string_pretty(&jwt[1]).expect("to_string_pretty always works on serde_json::Value"));
+    println!(
+        "{}",
+        serde_json::to_string_pretty(&jwt[0])
+            .expect("to_string_pretty always works on serde_json::Value")
+    );
+    println!(
+        "{}",
+        serde_json::to_string_pretty(&jwt[1])
+            .expect("to_string_pretty always works on serde_json::Value")
+    );
 }
 
 fn printout_help() {
     println!("{} {}\n", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
-    println!("jwt displays a given base64 encoded JWT String in a readable manner.\n
-        JWT header and body are printed in separate lines.\n");
+    println!(
+        "jwt displays a given base64 encoded JWT String in a readable manner.\n\
+        JWT header and body are printed in separate lines.\n"
+    );
     println!("Syntax: {} [Options] <JWT>\n", env!("CARGO_PKG_NAME"));
-    println!("Options:\n\t--help,  -h\t View this help message");
+    println!(
+        "Options:
+        --help,  -h\t View this help message"
+    );
 }
